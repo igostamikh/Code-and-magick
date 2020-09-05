@@ -1,11 +1,14 @@
 window.renderStatistics =  function (ctx, names, times) {
-   let x = 100;
-   let y = 10;
+   let x = 100; //Позиция холста по горизонтали
+   let y = 10; //Позиция холста по вертикали
    let verticalNamePosition = y + 250;
    let verticalTimePosition = y + 220;
-   let highTime = Math.max.apply(null, times);
-   const heightCoefficient = Math.round(highTime / 150);
-   //Перемещаю себя в начало массива
+   const startPosition = x + 40; //Начальная позиция столбца
+   const step = 90; //Расстояние между столбцами
+   let position;
+   let highTime = Math.max.apply(null, times); //Наихудшее время
+   const heightCoefficient = Math.round(highTime / 150); //коэфициент высоты колонки гистограммы
+   //Перемещаю текущего игрока в начало массива
    let index;
    for (let i = 0; i < names.length; i++) {
       if (names[i] === "Вы"){
@@ -29,13 +32,12 @@ window.renderStatistics =  function (ctx, names, times) {
 
    //Гистограммы
    ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-   ctx.fillRect(x + 40, y + 240 - times[0] / heightCoefficient, 40, times[0] / heightCoefficient);
-   ctx.fillStyle = 'rgba(0, 0, 255, ' +  opacity() + ')';
-   ctx.fillRect(x + 130, y + 240 - times[1] / heightCoefficient, 40, times[1] / heightCoefficient);
-   ctx.fillStyle = 'rgba(0, 0, 255, ' +  opacity() + ')';
-   ctx.fillRect(x + 220, y + 240 - times[2] / heightCoefficient, 40, times[2] / heightCoefficient);
-   ctx.fillStyle = 'rgba(0, 0, 255, ' +  opacity() + ')';
-   ctx.fillRect(x + 310, y + 240 - times[3] / heightCoefficient, 40, times[3] / heightCoefficient);
+   position = startPosition; //Позиция столбца
+   for (let i = 0; i < times.length; i++){
+      ctx.fillRect(position, y + 240 - times[i] / heightCoefficient, 40, times[i] / heightCoefficient);
+      ctx.fillStyle = 'rgba(0, 0, 255, ' +  opacity() + ')';
+      position += step;
+   }
 
    //Massage
    ctx.font = '16px "PT Mono"';
@@ -46,15 +48,17 @@ window.renderStatistics =  function (ctx, names, times) {
    ctx.fillText('Список результатов:', x + 50 , y + 30);
 
    //Вывод имён игроков
-   ctx.fillText(names[0], x + 40, verticalNamePosition);
-   ctx.fillText(names[1], x + 130, verticalNamePosition);
-   ctx.fillText(names[2], x + 220, verticalNamePosition);
-   ctx.fillText(names[3], x + 310, verticalNamePosition);
+   position = startPosition; //Позиция столбца
+   for (let i = 0; i < names.length; i++){
+      ctx.fillText(names[i], position, verticalNamePosition);
+      position += step;
+   }
 
 //   Вывод временных результатов
-   ctx.fillText(Math.round(times[0]), x + 40, verticalTimePosition - times[0] / heightCoefficient);
-   ctx.fillText(Math.round(times[1]), x + 130, verticalTimePosition - times[1] / heightCoefficient);
-   ctx.fillText(Math.round(times[2]), x + 220, verticalTimePosition - times[2] / heightCoefficient);
-   ctx.fillText(Math.round(times[3]), x + 310, verticalTimePosition - times[3] / heightCoefficient);
+   position = startPosition; //Позиция столбца
+   for (let i = 0; i < times.length; i++){
+      ctx.fillText(Math.round(times[i]), position, verticalTimePosition - times[i] / heightCoefficient);
+      position += step;
+   }
 };
 
