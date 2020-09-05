@@ -56,7 +56,7 @@ window.renderStatistics =  function (ctx, names, times) {
 //   Вывод временных результатов
    position = startPosition; //Позиция столбца
    for (let i = 0; i < times.length; i++){
-      ctx.strokeText(Math.round(times[i]), position, verticalTimePosition - times[i] / heightCoefficient);
+      ctx.strokeText(Math.round(times[i]).toString(), position, verticalTimePosition - times[i] / heightCoefficient);
       position += step;
    }
 };
