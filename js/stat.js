@@ -42,22 +42,21 @@ window.renderStatistics =  function (ctx, names, times) {
    //Massage
    ctx.font = '16px "PT Mono"';
    ctx.textBaseline = 'hanging';
-   ctx.fillStyle = 'black';
 
-   ctx.fillText('Ура вы победили!', x + 60, y + 10);
-   ctx.fillText('Список результатов:', x + 50 , y + 30);
+   ctx.strokeText('Ура вы победили!', x + 60, y + 10);
+   ctx.strokeText('Список результатов:', x + 50 , y + 30);
 
    //Вывод имён игроков
    position = startPosition; //Позиция столбца
    for (let i = 0; i < names.length; i++){
-      ctx.fillText(names[i], position, verticalNamePosition);
+      ctx.strokeText(names[i], position, verticalNamePosition);
       position += step;
    }
 
 //   Вывод временных результатов
    position = startPosition; //Позиция столбца
    for (let i = 0; i < times.length; i++){
-      ctx.fillText(Math.round(times[i]), position, verticalTimePosition - times[i] / heightCoefficient);
+      ctx.strokeText(Math.round(times[i]), position, verticalTimePosition - times[i] / heightCoefficient);
       position += step;
    }
 };
