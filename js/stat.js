@@ -20,7 +20,7 @@ window.renderStatistics =  function (ctx, names, times) {
    //Определение прозрачности
    function opacity(){
       let value = Math.random();
-      return  value === 0 ? 0.1 : value;
+      return  value <= 0.1 ? 1 : value;
    }
    //Отписовка тени
    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
@@ -35,28 +35,29 @@ window.renderStatistics =  function (ctx, names, times) {
    position = startPosition; //Позиция столбца
    for (let i = 0; i < times.length; i++){
       ctx.fillRect(position, y + 240 - times[i] / heightCoefficient, 40, times[i] / heightCoefficient);
-      ctx.fillStyle = 'rgba(0, 0, 255, ' +  opacity() + ')';
+      ctx.fillStyle = `rgba(0, 0, 255, ${opacity()})`;
       position += step;
    }
 
    //Massage
    ctx.font = '16px "PT Mono"';
    ctx.textBaseline = 'hanging';
+   ctx.fillStyle = 'black';
 
-   ctx.strokeText('Ура вы победили!', x + 60, y + 10);
-   ctx.strokeText('Список результатов:', x + 50 , y + 30);
+   ctx.fillText('Ура вы победили!', x + 60, y + 10);
+   ctx.fillText('Список результатов:', x + 50 , y + 30);
 
    //Вывод имён игроков
    position = startPosition; //Позиция столбца
    for (let i = 0; i < names.length; i++){
-      ctx.strokeText(names[i], position, verticalNamePosition);
+      ctx.fillText(names[i], position, verticalNamePosition);
       position += step;
    }
 
 //   Вывод временных результатов
    position = startPosition; //Позиция столбца
    for (let i = 0; i < times.length; i++){
-      ctx.strokeText(Math.round(times[i]).toString(), position, verticalTimePosition - times[i] / heightCoefficient);
+      ctx.fillText(Math.round(times[i]).toString(), position, verticalTimePosition - times[i] / heightCoefficient);
       position += step;
    }
 };
