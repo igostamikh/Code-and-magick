@@ -1,5 +1,37 @@
-//Первая задача
-document.querySelector('.setup').classList.remove('hidden');
+// Открытие/закрытие окна настройки персонажа
+let setupOpen = document.querySelector('.setup-open');
+let setup = document.querySelector('.setup');
+let setupClose = document.querySelector('.setup-close');
+let input =document.getElementById('username');
+
+setupOpen.onclick = openSetup;// Открытие окна по клику на иконку пользователя
+setupClose.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter'){closeSetup()}
+});
+setupClose.onclick = closeSetup;// Закрытие окна по клику на крестик
+setupOpen.addEventListener('keyup', popupKeyPress);// Обработчик нажатия клавиш
+console.log(input.onfocus);
+//Функция открытия окна настроек
+function openSetup(){
+    setup.classList.remove('hidden');
+}
+// Функция закрытия окна настроек
+function closeSetup(){
+    setup.classList.add('hidden');
+}
+// Функция открытия-закрытия окна по нажатию клавиш
+function popupKeyPress(e) {
+    if (setup.classList.value.indexOf('hidden') !== -1){
+        if (e.key === 'Enter'){
+            openSetup();
+        }
+    } else {
+        if (e.key === 'Escape') {
+            closeSetup();
+        }
+    }
+    return false;
+}
 
 // Вторая задача
 let wizards = [firstWizard = {}, secondWizard = {}, thirdWizard = {}, fourthWizard = {}];
@@ -49,8 +81,24 @@ let similarListElement = document.querySelector('.setup-similar-list');
 for (let i = 0; i < wizards.length; i++){
     similarListElement.appendChild(drawWizard[i]);
 }
-//Задача 5
-document.querySelector('.setup-similar').classList.remove('hidden');
+//Задание 4-3. Меняем цвет пальто на случайный по нажатию
+const randomCoatColor = [
+    'rgb(101, 137, 164)',
+    'rgb(241, 43, 107)',
+    'rgb(146, 100, 161)',
+    'rgb(56, 159, 117)',
+    'rgb(215, 210, 55)',
+    'rgb(0, 0, 0)'
+];
 
-document.querySelector('.overlay').classList.remove('hidden');
+let userCoat = document.querySelector('.wizard-coat');
+userCoat.setAttribute('style', 'cursor:pointer');
+userCoat.onclick = changeCoatColor;
+
+function changeCoatColor(obj) {
+    let color = randomCoatColor[Math.floor(Math.random() * randomCoatColor.length)];
+    obj.target.setAttribute('style', 'fill:' + color + '; cursor:pointer');
+}
+
+
 //TODO: Продолжить проект и изучить "querySelector"
